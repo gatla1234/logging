@@ -1,0 +1,16 @@
+*** Please Note this is a MAVEN bound library ***
+
+
+0) The Tag Name is referred to in the SBM form (i.e. "v1.0.0") and will be referred to as "[Tag]"
+
+1) From a local folder get a copy of the code the code:
+git clone --branch [Tag] ssh://git@code.dtcc.com:7999/ecd/aws-log-utils-java.git
+
+
+2) cd aws-log-utils-java
+
+3) Build the package
+mvn clean package -DskipTests -Dmaven.test.skip=true
+
+4) deploy the package to the N: drive
+mvn deploy -DskipTests -Dmaven.test.skip=true

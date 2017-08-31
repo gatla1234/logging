@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" packages="com.dtcc.ecd.awslogutils.log4j_plugins">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="[%level] %msg %XX%n"/>
+    </Console>
+    <CloudWatchBulkAppender name="SimpleLayoutCloudWatchAppender" streamExtension="simple_fragment">
+       <PatternLayout pattern="[%level] %msg %XX"/>
+    </CloudWatchBulkAppender>
+    <CloudWatchBulkAppender name="SplunkLayoutCloudWatchAppender" streamExtension="splunk_fragment">
+       <PatternLayout pattern="%d{UNIX_MILLIS} log_message='%msg' severity='%level' %XX"/>
+    </CloudWatchBulkAppender>
+    <CloudWatchIncidentAppender name="CloudWatchIncidentAppender" otherAttribute="">
+        <PatternLayout pattern="%X{__LOG4J_THREADCONTEXT_SYSID__}!?!%m!?!%X{__LOG4J_THREADCONTEXT_INCIDENT_ORIGIN__}!?!%class!?!%method!?!%d{DEFAULT}"/>
+    </CloudWatchIncidentAppender>
+  </Appenders>
+  <Loggers>>
+    <Logger name="SplunkCloudWatchLogger" level="info" additivity="false">
+      <AppenderRef ref="SplunkLayoutCloudWatchAppender"/>
+    </Logger>
+  	<Logger name="DefaultCloudWatchLogger" level="debug" additivity="false">
+      <AppenderRef ref="SimpleLayoutCloudWatchAppender"/>
+    </Logger>
+    <Logger name="IncidentCloudWatch" level="debug" additivity="false">
+      <AppenderRef ref="CloudWatchIncidentAppender"/>
+    </Logger>
+    <Logger name="ConsoleLogger" level="info" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="com.amazonaws.request" level="off" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.apache.http.wire" level="off" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Root>
+      <AppenderRef ref="Console"/>
+    </Root>
+  </Loggers>
+</Configuration>
